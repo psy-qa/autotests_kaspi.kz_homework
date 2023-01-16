@@ -1,10 +1,12 @@
+from selenium.webdriver.common.by import By
+
 from pages.locators import CheckSelectedProduct
 
 
 class CheckResultParametersNoteebok():
     """Класс для сравнения выбранного ноутбука и его параметров пр сортировке"""
 
-    def __init__(self,browser):
+    def __init__(self, browser):
         """Инициализация ключевых атрибутов класса"""
         self.browser = browser
 
@@ -12,10 +14,23 @@ class CheckResultParametersNoteebok():
 
     def get_selected_product_code(self):
         return self.browser.find_element(*CheckSelectedProduct.PRODUCT_CODE_SELECTED_DEVICE)
+
     def get_selected_device_title(self):
         return self.browser.find_element(*CheckSelectedProduct.PRODUCT_TITLE_SELECTED_DEVICE)
 
+    def get_product_specification_button(self):
+        return self.browser.find_element(*CheckSelectedProduct.PRODUCT_SELECTED_SPECIFICATIONS)
+
+    def get_notebook_specification_parameters(self, parameter):
+        return self.browser.find_element(By.XPATH, f"//*[@class = 'specifications-list ']/*/dd/*/dd[text()"
+                                                   f"='{parameter}']")
+
     # actions
+
+    def click_specification_button(self):
+        self.get_product_specification_button().click()
+
+    # methods
 
     def check_product_code_is_exist(self):
         if self.get_selected_product_code():
@@ -33,3 +48,26 @@ class CheckResultParametersNoteebok():
                     assert search_word.lower() in product_title_string.lower()
             else:
                 print("Wrong request")
+
+    def check_specifications_parameters_in_page(self, parameters):
+        # ноутбук/Aplle M1/золотистый
+        # ноутбук/16 ГБ
+
+        if type(parameters) == str:
+            if parameters == 'apple m1':
+                parameters = parameters.title()
+            elif parameters == '16 гб':
+                parameters = parameters.upper()
+            else:
+                parameters = parameters.lower()
+            assert self.get_notebook_specification_parameters(parameters), "Wrong parameter title"
+
+        elif type(parameters) == list:
+            for parameter in parameters:
+                if parameter == 'apple m1':
+                    parameter = parameter.title()
+                elif parameter == '16 гб':
+                    parameter = parameter.upper()
+                else:
+                    parameter = parameter.lower()
+                assert self.get_notebook_specification_parameters(parameter), "Wrong parameters title"
