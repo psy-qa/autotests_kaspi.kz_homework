@@ -1,5 +1,4 @@
 from selenium.webdriver.common.by import By
-
 from pages.locators import CheckSelectedProduct
 
 
@@ -21,7 +20,7 @@ class CheckResultParametersNoteebok():
     def get_product_specification_button(self):
         return self.browser.find_element(*CheckSelectedProduct.PRODUCT_SELECTED_SPECIFICATIONS)
 
-    def get_notebook_specification_parameters(self, parameter):
+    def get_specification_parameters(self, parameter):
         return self.browser.find_element(By.XPATH, f"//*[@class = 'specifications-list ']/*/dd/*/dd[text()"
                                                    f"='{parameter}']")
 
@@ -49,7 +48,7 @@ class CheckResultParametersNoteebok():
             else:
                 print("Wrong request")
 
-    def check_specifications_parameters_in_page(self, parameters):
+    def check_specification_contain_parameters_in_page(self, parameters):
         # ноутбук/Aplle M1/золотистый
         # ноутбук/16 ГБ
 
@@ -60,7 +59,7 @@ class CheckResultParametersNoteebok():
                 parameters = parameters.upper()
             else:
                 parameters = parameters.lower()
-            assert self.get_notebook_specification_parameters(parameters), "Wrong parameter title"
+            assert self.get_specification_parameters(parameters), "Wrong parameter title"
 
         elif type(parameters) == list:
             for parameter in parameters:
@@ -70,4 +69,4 @@ class CheckResultParametersNoteebok():
                     parameter = parameter.upper()
                 else:
                     parameter = parameter.lower()
-                assert self.get_notebook_specification_parameters(parameter), "Wrong parameters title"
+                assert self.get_specification_parameters(parameter), "Wrong parameters title"
