@@ -48,7 +48,3 @@ def test_buy_top_purple_iphone_14_pro_max_for_best_review_hover_menu(browser):
     main_page.screenshot_qr('iPhone_14promax_purple_QR')
 
 
-if __name__ == "__main__":
-    test_buy_top_purple_iphone_14_pro_max_for_best_review_hover_menu()
-    test_buy_macbook_m1_cheap_and_fast_delivery()
-    test_buy_most_expensive_golden_macbook_air_m1_from_global_search()
